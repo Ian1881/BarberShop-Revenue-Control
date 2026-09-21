@@ -10,7 +10,7 @@ export default function Services({ onAddService, services, setDoneServices }) {
     onAddService((services) => [
       ...services,
       {
-        service: service,
+        service: service.trim(),
         price: price,
         id:
           Date.now().toString(12) + Math.random().toString(36).substring(2, 9),
@@ -44,7 +44,10 @@ export default function Services({ onAddService, services, setDoneServices }) {
     setDoneServices((doneServices) => [
       ...doneServices,
       {
-        service: `${selectedServices.map((service) => service.service).join(" + ")}`,
+        service: `${selectedServices
+          .map((service) => service.service.slice(0, 3))
+          .join(" + ")
+          .trim()}`,
         price: selectedServices
           .map((service) => service.price)
           .reduce((acc, cur) => acc + cur, 0),

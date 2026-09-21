@@ -94,7 +94,7 @@ function Summary({ service, handleRemoveService }) {
         >
           &times;
         </button>
-        <h4>{`${service.service.slice(0, 14)}.`}</h4> <h3>C${service.price}</h3>
+        <h4>{service.service.slice(0, 14)}</h4> <h3>C${service.price}</h3>
       </span>
       <p className="summary-date">
         {date} - {hour}
@@ -113,7 +113,9 @@ function EmptyDoneServices() {
 
 function TotalSummary({ services, todayDate }) {
   const todayServices = services.filter(
-    (item) => item.date.getDate() === todayDate,
+    (item) =>
+      item.date.getDate() === todayDate ||
+      item.date.getMonth() === new Date().getMonth(),
   );
 
   const dateText =
