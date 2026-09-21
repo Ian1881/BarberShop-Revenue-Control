@@ -1,0 +1,16 @@
+{
+  "name": "Control de Ingresos",
+  "short_name": "Ingresos",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f2efe8",
+  "theme_color": "#3f8067",
+  "icons": [
+    {
+      "src": "/download.png",
+      "sizes": "821x821",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

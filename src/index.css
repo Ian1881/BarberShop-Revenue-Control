@@ -382,6 +382,60 @@ button {
   letter-spacing: -0.06em;
 }
 
+.gastos-view {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 48px;
+}
+
+.gastos-copy {
+  width: 100%;
+  padding: 8px 24px 24px;
+  border-bottom: 1px solid var(--line);
+  text-align: center;
+}
+
+.gastos-kicker {
+  display: block;
+  margin-bottom: 12px;
+  color: var(--green);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.gastos-message {
+  max-width: 460px;
+  margin: 0 auto;
+  color: var(--ink);
+  font-size: clamp(1.1rem, 2.8vw, 1.55rem);
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.gastos-image-frame {
+  display: grid;
+  width: min(420px, 100%);
+  aspect-ratio: 1;
+  place-items: center;
+  margin-top: 36px;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--paper);
+  box-shadow: var(--shadow);
+}
+
+.gastos-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 7px;
+  object-fit: cover;
+}
+
 .summary-item {
   display: flex;
   align-items: center;
@@ -549,5 +603,22 @@ button {
 
   .month-total-card {
     margin-top: 28px;
+  }
+
+  .gastos-view {
+    margin-top: 32px;
+  }
+
+  .gastos-copy {
+    padding: 0 12px 20px;
+  }
+
+  .gastos-message {
+    font-size: 1rem;
+  }
+
+  .gastos-image-frame {
+    margin-top: 28px;
+    padding: 12px;
   }
 }

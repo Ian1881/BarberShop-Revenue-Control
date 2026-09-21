@@ -37,7 +37,7 @@ export default function DayServices({ services, setDoneServices }) {
           </Button>
           <TotalSummary services={SortedServices} todayDate={todayDate} />
           <Button
-            className="button"
+            className={`button ${todayDate === new Date().getDate() ? "grayed" : ""}`}
             onclicked={() =>
               todayDate < new Date().getDate() && handleNextDay()
             }

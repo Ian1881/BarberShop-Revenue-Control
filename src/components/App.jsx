@@ -5,6 +5,7 @@ import "../index.css";
 import Services from "./Services.jsx";
 import DayServices from "./DayServices.jsx";
 import MonthSummary from "./MonthSummary.jsx";
+import Gastos from "./Gastos.jsx";
 
 function App() {
   const [services, setServices] = useLocalStorage("services", []);
@@ -49,10 +50,6 @@ function Home({ services, setServices, parsedDoneServices, setDoneServices }) {
       />
     </>
   );
-}
-
-function Gastos() {
-  return <h2>COSHON</h2>;
 }
 
 export default App;

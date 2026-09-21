@@ -1,6 +1,4 @@
 import { useState } from "react";
-
-//eslint-disable-next-line
 import { fullMonths } from "./helper.js";
 import Button from "./Button.jsx";
 
@@ -9,7 +7,7 @@ export default function MonthSummary({ doneServices }) {
   const [curYear] = useState(() => new Date().getFullYear());
 
   function handlePrevMonth() {
-    setCurMonth((m) => m - 1);
+    curMonth > 0 && setCurMonth((m) => m - 1);
   }
 
   function handleNextMonth() {
@@ -27,19 +25,24 @@ export default function MonthSummary({ doneServices }) {
   return (
     <div className="month-view">
       <div className="month-navigation">
-        <Button className="button" onclicked={handlePrevMonth}>
-          Anterior
+        <Button
+          className={curMonth > 0 ? "button" : "grayed"}
+          onclicked={handlePrevMonth}
+        >
+          Mes Anterior
         </Button>
-        <div className="month-name">Months total here</div>
+        <div className="month-name">
+          Total del Mes de {fullMonths[curMonth]} / {curYear}
+        </div>
         <Button
           className={curMonth === new Date().getMonth() ? "grayed" : "button"}
           onclicked={handleNextMonth}
         >
-          Siguiente
+          Siguiente Mes
         </Button>
       </div>
       <div className="month-total-card">
-        <span className="month-total-value">{monthTotal}</span>
+        <span className="month-total-value">{`C$${monthTotal}`}</span>
       </div>
     </div>
   );
