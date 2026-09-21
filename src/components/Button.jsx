@@ -1,8 +1,15 @@
-export default function Button({ children, onclicked, active = false }) {
+export default function Button({
+  children,
+  onclicked,
+  active = false,
+  className = "button",
+  disabled = false,
+}) {
   return (
     <button
-      className={`button${active ? " button-active" : ""}`}
+      className={`button ${className}${active ? " button-active" : ""}`}
       onClick={onclicked}
+      disabled={disabled}
       type="button"
     >
       {children}

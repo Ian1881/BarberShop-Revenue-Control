@@ -125,6 +125,20 @@ button {
   background: var(--green-soft);
 }
 
+.button:disabled,
+.grayed {
+  color: #77786f;
+  background: #e2e1dc;
+  cursor: not-allowed;
+  opacity: 0.72;
+}
+
+.button:disabled:hover,
+.grayed:hover {
+  color: #77786f;
+  background: #e2e1dc;
+}
+
 .button:focus-visible,
 .close-btn:focus-visible {
   outline: 3px solid rgba(216, 119, 67, 0.35);
@@ -303,6 +317,71 @@ button {
   font-size: 1rem;
 }
 
+.month-view {
+  width: min(760px, calc(100% - 48px));
+  margin: 48px auto 0;
+}
+
+.month-navigation {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: 16px;
+  padding: 0 0 20px;
+  border-bottom: 1px solid var(--line);
+}
+
+.month-navigation .button {
+  color: #fff;
+  background: #266726;
+}
+
+.month-navigation .grayed {
+  color: #77786f;
+  background: #e2e1dc;
+  cursor: not-allowed;
+  opacity: 0.72;
+}
+
+.month-navigation .grayed:hover {
+  color: #77786f;
+  background: #e2e1dc;
+}
+
+.month-navigation > .button:first-child {
+  justify-self: start;
+}
+
+.month-navigation > .button:last-child {
+  justify-self: end;
+}
+
+.month-name {
+  color: var(--ink);
+  font-size: clamp(1.2rem, 2.4vw, 1.7rem);
+  font-weight: 700;
+  text-align: center;
+}
+
+.month-total-card {
+  display: grid;
+  width: min(360px, 100%);
+  aspect-ratio: 1;
+  place-items: center;
+  margin: 36px auto 0;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--paper);
+  box-shadow: var(--shadow);
+}
+
+.month-total-value {
+  color: var(--green);
+  font-size: clamp(3rem, 9vw, 5.5rem);
+  font-weight: 700;
+  letter-spacing: -0.06em;
+}
+
 .summary-item {
   display: flex;
   align-items: center;
@@ -447,5 +526,28 @@ button {
 
   .total-summary-nav h3 strong {
     font-size: 0.86rem;
+  }
+
+  .month-view {
+    width: min(100% - 32px, 560px);
+    margin-top: 32px;
+  }
+
+  .month-navigation {
+    gap: 8px;
+  }
+
+  .month-navigation .button {
+    min-height: 42px;
+    padding: 0 12px;
+    font-size: 0.76rem;
+  }
+
+  .month-name {
+    font-size: 1.05rem;
+  }
+
+  .month-total-card {
+    margin-top: 28px;
   }
 }

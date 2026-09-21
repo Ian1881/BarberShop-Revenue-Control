@@ -4,6 +4,7 @@ import NavBar from "./NavBar.jsx";
 import "../index.css";
 import Services from "./Services.jsx";
 import DayServices from "./DayServices.jsx";
+import MonthSummary from "./MonthSummary.jsx";
 
 function App() {
   const [services, setServices] = useLocalStorage("services", []);
@@ -26,7 +27,9 @@ function App() {
           setDoneServices={setDoneServices}
         />
       )}
-      {activeView === "Mes" && <Month />}
+      {activeView === "Mes" && (
+        <MonthSummary doneServices={parsedDoneServices} />
+      )}
       {activeView === "Gastos" && <Gastos />}
     </div>
   );
@@ -46,10 +49,6 @@ function Home({ services, setServices, parsedDoneServices, setDoneServices }) {
       />
     </>
   );
-}
-
-function Month() {
-  return <h2>Hello Baby</h2>;
 }
 
 function Gastos() {
