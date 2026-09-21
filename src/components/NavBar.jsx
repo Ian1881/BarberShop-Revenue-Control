@@ -1,10 +1,7 @@
-import { useState } from "react";
 import logo from "../assets/download.png";
 import Button from "./Button.jsx";
 
-export default function NavBar() {
-  const [activeView, setActiveView] = useState("Inicio");
-
+export default function NavBar({ setActiveView, activeView }) {
   const handleNavigation = (view) => {
     setActiveView(view);
   };

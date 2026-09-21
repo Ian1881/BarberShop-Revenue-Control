@@ -1,3 +1,4 @@
+import { useLocalStorage } from "./useLocalStorage";
 import { useState } from "react";
 import NavBar from "./NavBar.jsx";
 import "../index.css";
@@ -5,20 +6,54 @@ import Services from "./Services.jsx";
 import DayServices from "./DayServices.jsx";
 
 function App() {
-  const [services, setServices] = useState([]);
-  const [doneServices, setDoneServices] = useState([]);
+  const [services, setServices] = useLocalStorage("services", []);
+  const [doneServices, setDoneServices] = useLocalStorage("doneServices", []);
+  const [activeView, setActiveView] = useState("Inicio");
+
+  const parsedDoneServices = doneServices.map((item) => {
+    return { ...item, date: new Date(item.date) };
+  });
 
   return (
     <div className="app-shell">
-      <NavBar />
+      <NavBar setActiveView={setActiveView} activeView={activeView} />
+      {activeView === "Inicio" && (
+        <Home
+          setActiveView={setActiveView}
+          services={services}
+          setServices={setServices}
+          parsedDoneServices={parsedDoneServices}
+          setDoneServices={setDoneServices}
+        />
+      )}
+      {activeView === "Mes" && <Month />}
+      {activeView === "Gastos" && <Gastos />}
+    </div>
+  );
+}
+
+function Home({ services, setServices, parsedDoneServices, setDoneServices }) {
+  return (
+    <>
       <Services
         onAddService={setServices}
         services={services}
         setDoneServices={setDoneServices}
       />
-      <DayServices services={doneServices} setDoneServices={setDoneServices} />
-    </div>
+      <DayServices
+        services={parsedDoneServices}
+        setDoneServices={setDoneServices}
+      />
+    </>
   );
+}
+
+function Month() {
+  return <h2>Hello Baby</h2>;
+}
+
+function Gastos() {
+  return <h2>COSHON</h2>;
 }
 
 export default App;
