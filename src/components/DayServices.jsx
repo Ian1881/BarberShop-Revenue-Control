@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Button from "./Button.jsx";
 const months = [
   "Ene",
@@ -19,11 +20,21 @@ const months = [
 //* for the month we'll take all the months that match with the current month. and add buttons so it goes back and forth I can reuse anterior and siguiente, I'll have to make them resusable components.
 
 export default function DayServices({ services, setDoneServices }) {
-  const isClear = services.length === 0;
+  const [todayDate, setTodayDate] = useState(() => new Date().getDate());
 
-  const SortedServices = services.toSorted(
-    (a, b) => b.date.getTime() - a.date.getTime(),
-  );
+  function handlePrevDay() {
+    setTodayDate((date) => (date > 1 ? date - 1 : date));
+  }
+
+  function handleNextDay() {
+    setTodayDate((date) => date + 1);
+  }
+
+  const SortedServices = services
+    .toSorted((a, b) => b.date.getTime() - a.date.getTime())
+    .filter((service) => service.date.getDate() === todayDate);
+
+  const isClear = SortedServices.length === 0;
 
   function handleRemoveService(id) {
     if (confirm("Seguro que quieres remover esta cita?"))
@@ -34,9 +45,18 @@ export default function DayServices({ services, setDoneServices }) {
     <div className="service-columns">
       <div className="service-summary day-summary">
         <div className="total-summary-nav">
-          <Button className="button">Anterior</Button>
-          <TotalSummary services={SortedServices} />
-          <Button className="button">Siguiente</Button>
+          <Button className="button" onclicked={handlePrevDay}>
+            Anterior
+          </Button>
+          <TotalSummary services={SortedServices} todayDate={todayDate} />
+          <Button
+            className="button"
+            onclicked={() =>
+              todayDate < new Date().getDate() && handleNextDay()
+            }
+          >
+            Siguiente
+          </Button>
         </div>
         {isClear ? (
           <EmptyDoneServices />
@@ -74,7 +94,7 @@ function Summary({ service, handleRemoveService }) {
         >
           &times;
         </button>
-        <h4>{service.service}</h4> <h3>C${service.price}</h3>
+        <h4>{`${service.service.slice(0, 14)}.`}</h4> <h3>C${service.price}</h3>
       </span>
       <p className="summary-date">
         {date} - {hour}
@@ -91,12 +111,23 @@ function EmptyDoneServices() {
   );
 }
 
-function TotalSummary({ services }) {
-  const total = services.reduce((acc, cur) => acc + cur.price, 0);
+function TotalSummary({ services, todayDate }) {
+  const todayServices = services.filter(
+    (item) => item.date.getDate() === todayDate,
+  );
+
+  const dateText =
+    todayDate === new Date().getDate()
+      ? "de Hoy"
+      : todayDate < new Date().getDate()
+        ? `del ${todayDate} de ${months[new Date().getMonth()]}`
+        : "";
+
+  const total = todayServices.reduce((acc, cur) => acc + cur.price, 0);
   return (
     <>
       <h3>
-        Total de Hoy: <strong>C${total}</strong>
+        Total {dateText}: <strong>C${total}</strong>
       </h3>
     </>
   );
