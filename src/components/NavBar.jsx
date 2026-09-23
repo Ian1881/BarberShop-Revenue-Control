@@ -24,7 +24,7 @@ export default function NavBar({ setActiveView, activeView }) {
             <Button
               key={view}
               active={activeView === view}
-              onclicked={() => handleNavigation(view)}
+              onClicked={() => handleNavigation(view)}
             >
               {view}
             </Button>

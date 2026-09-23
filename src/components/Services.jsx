@@ -12,8 +12,7 @@ export default function Services({ onAddService, services, setDoneServices }) {
       {
         service: service.trim(),
         price: price,
-        id:
-          Date.now().toString(12) + Math.random().toString(36).substring(2, 9),
+        id: crypto.randomUUID(),
         added: false,
       },
     ]);
@@ -38,7 +37,7 @@ export default function Services({ onAddService, services, setDoneServices }) {
   }
 
   function handleTodayServices() {
-    const selectedServices = [...services].filter((service) => service.added);
+    const selectedServices = services.filter((service) => service.added);
     if (selectedServices.length === 0) return;
 
     setDoneServices((doneServices) => [
@@ -75,7 +74,7 @@ export default function Services({ onAddService, services, setDoneServices }) {
           value={price}
           onChange={(e) => setPrice(+e.target.value)}
         />
-        <Button onclicked={handleService} active={true}>
+        <Button onClicked={handleService} active={true}>
           Añadir
         </Button>
       </div>
@@ -159,7 +158,7 @@ function AddDoneService({ services, handleTodayServices }) {
     <div>
       <h4>Precio Total</h4>
       <h2>C${total}</h2>
-      <Button onclicked={handleTodayServices}>+1 Agregar Servicio</Button>
+      <Button onClicked={handleTodayServices}>+1 Agregar Servicio</Button>
     </div>
   );
 }

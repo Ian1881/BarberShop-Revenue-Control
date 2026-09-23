@@ -40,13 +40,13 @@ export default function DayServices({ services, setDoneServices }) {
     <div className="service-columns">
       <div className="service-summary day-summary">
         <div className="total-summary-nav">
-          <Button className="button" onclicked={handlePrevDay}>
+          <Button className="button" onClicked={handlePrevDay}>
             Anterior
           </Button>
           <TotalSummary services={SortedServices} todayDate={todayDate} />
           <Button
             className={`button ${todayDate.getDate() === new Date().getDate() ? "grayed" : ""}`}
-            onclicked={() =>
+            onClicked={() =>
               todayDate.getDate() < new Date().getDate() && handleNextDay()
             }
           >

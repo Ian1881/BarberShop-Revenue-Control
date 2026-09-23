@@ -27,7 +27,7 @@ export default function MonthSummary({ doneServices }) {
       <div className="month-navigation">
         <Button
           className={curMonth > 0 ? "button" : "grayed"}
-          onclicked={handlePrevMonth}
+          onClicked={handlePrevMonth}
         >
           Mes Anterior
         </Button>
@@ -36,7 +36,7 @@ export default function MonthSummary({ doneServices }) {
         </div>
         <Button
           className={curMonth === new Date().getMonth() ? "grayed" : "button"}
-          onclicked={handleNextMonth}
+          onClicked={handleNextMonth}
         >
           Siguiente Mes
         </Button>
