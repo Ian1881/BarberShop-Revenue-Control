@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Button from "./Button.jsx";
-import { months, date, month, year } from "./helper.js";
+import { months } from "./helper.js";
 
 //!for tomorrow, we have to set the date so it shows the date they want to see, based off the current date, we can use date matching and functions increasing or reducing the date base threshold from the doneServices array.
 
@@ -49,6 +49,10 @@ export default function DayServices({ services, setDoneServices }) {
     if (confirm("Seguro que quieres remover esta cita?"))
       setDoneServices((service) => service.filter((s) => s.id !== id));
   }
+
+  const date = new Date().getDate();
+  const month = new Date().getMonth();
+  const year = new Date().getFullYear();
 
   const dayEqual = todayDate.getDate() === date;
   const monthEqual = todayDate.getMonth() === month;
@@ -123,12 +127,9 @@ function EmptyDoneServices() {
 }
 
 function TotalSummary({ services, todayDate }) {
-  const todayServices = services.filter(
-    (item) =>
-      item.date.getDate() === todayDate.getDate() &&
-      item.date.getMonth() === new Date(todayDate).getMonth(),
-  );
-
+  const date = new Date().getDate();
+  const month = new Date().getMonth();
+  const year = new Date().getFullYear();
   const dateText =
     todayDate.getDate() === date &&
     todayDate.getMonth() === month &&
@@ -136,7 +137,7 @@ function TotalSummary({ services, todayDate }) {
       ? "de Hoy"
       : `del ${todayDate.getDate()} de ${months[new Date(todayDate).getMonth()]}`;
 
-  const total = todayServices.reduce((acc, cur) => acc + cur.price, 0);
+  const total = services.reduce((acc, cur) => acc + cur.price, 0);
   return (
     <>
       <h3>

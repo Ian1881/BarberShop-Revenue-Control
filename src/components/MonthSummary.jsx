@@ -9,8 +9,8 @@ export default function MonthSummary({ doneServices }) {
   function handlePrevMonth() {
     curMonth.getMonth() > 0 &&
       setCurMonth((m) => {
-        const newMonth = new Date();
-        newMonth.setMonth(m.getMonth() - 1);
+        const newMonth = new Date(m);
+        newMonth.setMonth(newMonth.getMonth() - 1);
         return newMonth;
       });
   }
@@ -18,8 +18,8 @@ export default function MonthSummary({ doneServices }) {
   function handleNextMonth() {
     curMonth.getMonth() < new Date().getMonth() &&
       setCurMonth((m) => {
-        const newMonth = new Date();
-        newMonth.setMonth(m.getMonth() + 1);
+        const newMonth = new Date(m);
+        newMonth.setMonth(newMonth.getMonth() + 1);
         return newMonth;
       });
   }
