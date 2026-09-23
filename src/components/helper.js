@@ -27,3 +27,7 @@ export const fullMonths = [
   "Noviembre",
   "Diciembre",
 ];
+
+export const date = new Date().getDate();
+export const month = new Date().getMonth();
+export const year = new Date().getFullYear();

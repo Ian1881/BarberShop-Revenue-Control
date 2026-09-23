@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Button from "./Button.jsx";
-import { months } from "./helper.js";
+import { months, date, month, year } from "./helper.js";
 
 //!for tomorrow, we have to set the date so it shows the date they want to see, based off the current date, we can use date matching and functions increasing or reducing the date base threshold from the doneServices array.
 
@@ -21,13 +21,27 @@ export default function DayServices({ services, setDoneServices }) {
     setTodayDate((date) => {
       const newDate = new Date(date);
       newDate.setDate(newDate.getDate() + 1);
+
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      const targetDate = new Date(newDate);
+      targetDate.setHours(0, 0, 0, 0);
+
+      if (targetDate > today) return date;
+
       return newDate;
     });
   }
 
   const SortedServices = services
     .toSorted((a, b) => b.date.getTime() - a.date.getTime())
-    .filter((service) => service.date.getDate() === todayDate.getDate());
+    .filter(
+      (service) =>
+        service.date.getDate() === todayDate.getDate() &&
+        service.date.getMonth() === todayDate.getMonth() &&
+        service.date.getFullYear() === todayDate.getFullYear(),
+    );
 
   const isClear = SortedServices.length === 0;
 
@@ -35,6 +49,10 @@ export default function DayServices({ services, setDoneServices }) {
     if (confirm("Seguro que quieres remover esta cita?"))
       setDoneServices((service) => service.filter((s) => s.id !== id));
   }
+
+  const dayEqual = todayDate.getDate() === date;
+  const monthEqual = todayDate.getMonth() === month;
+  const yearEqual = todayDate.getFullYear() === year;
 
   return (
     <div className="service-columns">
@@ -44,11 +62,9 @@ export default function DayServices({ services, setDoneServices }) {
             Anterior
           </Button>
           <TotalSummary services={SortedServices} todayDate={todayDate} />
-          <Button
-            className={`button ${todayDate.getDate() === new Date().getDate() ? "grayed" : ""}`}
-            onClicked={() =>
-              todayDate.getDate() < new Date().getDate() && handleNextDay()
-            }
+          <Button //! fix this
+            className={`button ${dayEqual && monthEqual && yearEqual ? "grayed" : ""}`}
+            onClicked={handleNextDay}
           >
             Siguiente
           </Button>
@@ -110,15 +126,15 @@ function TotalSummary({ services, todayDate }) {
   const todayServices = services.filter(
     (item) =>
       item.date.getDate() === todayDate.getDate() &&
-      item.date.getMonth() === new Date().getMonth(),
+      item.date.getMonth() === new Date(todayDate).getMonth(),
   );
 
   const dateText =
-    todayDate === new Date().getDate()
+    todayDate.getDate() === date &&
+    todayDate.getMonth() === month &&
+    todayDate.getFullYear() === year
       ? "de Hoy"
-      : todayDate < new Date().getDate()
-        ? `del ${todayDate} de ${months[new Date().getMonth()]}`
-        : "";
+      : `del ${todayDate.getDate()} de ${months[new Date(todayDate).getMonth()]}`;
 
   const total = todayServices.reduce((acc, cur) => acc + cur.price, 0);
   return (
