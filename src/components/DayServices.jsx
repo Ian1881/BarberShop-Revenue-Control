@@ -109,7 +109,8 @@ function Summary({ service, handleRemoveService }) {
         >
           &times;
         </button>
-        <h4>{service.service.slice(0, 14)}</h4> <h3>C${service.price}</h3>
+        <h4>{service.service.slice(0, 14)}</h4>{" "}
+        <h3 translate="no">C${service.price}</h3>
       </span>
       <p className="summary-date">
         {date} - {hour}
@@ -141,7 +142,7 @@ function TotalSummary({ services, todayDate }) {
   return (
     <>
       <h3>
-        Total {dateText}: <strong>C${total}</strong>
+        Total {dateText}: <strong translate="no">C${total}</strong>
       </h3>
     </>
   );

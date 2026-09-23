@@ -138,7 +138,7 @@ function List({ service, handleAddService, handleRemoveService }) {
         &times;
       </button>
       <h3>{service.service}</h3>
-      <p>C${service.price}</p>
+      <p translate="no">C${service.price}</p>
       <input
         type="checkbox"
         checked={service.added}
@@ -157,7 +157,7 @@ function AddDoneService({ services, handleTodayServices }) {
   return (
     <div>
       <h4>Precio Total</h4>
-      <h2>C${total}</h2>
+      <h2 translate="no">C${total}</h2>
       <Button onClicked={handleTodayServices}>+1 Agregar Servicio</Button>
     </div>
   );

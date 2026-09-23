@@ -54,7 +54,10 @@ export default function MonthSummary({ doneServices }) {
         </Button>
       </div>
       <div className="month-total-card">
-        <span className="month-total-value">{`C$${monthTotal}`}</span>
+        <span
+          translate="no"
+          className="month-total-value"
+        >{`C$${monthTotal}`}</span>
       </div>
     </div>
   );
