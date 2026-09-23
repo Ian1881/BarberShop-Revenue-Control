@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { fullMonths } from "./helper.js";
+import { months } from "./helper.js";
 import Button from "./Button.jsx";
 
 export default function MonthSummary({ doneServices }) {
@@ -32,7 +32,7 @@ export default function MonthSummary({ doneServices }) {
           Mes Anterior
         </Button>
         <div className="month-name">
-          Total del Mes de {fullMonths[curMonth]} / {curYear}
+          Total Mes {months[curMonth]}/{curYear}
         </div>
         <Button
           className={curMonth === new Date().getMonth() ? "grayed" : "button"}

@@ -7,19 +7,27 @@ import { months } from "./helper.js";
 //* for the month we'll take all the months that match with the current month. and add buttons so it goes back and forth I can reuse anterior and siguiente, I'll have to make them resusable components.
 
 export default function DayServices({ services, setDoneServices }) {
-  const [todayDate, setTodayDate] = useState(() => new Date().getDate());
+  const [todayDate, setTodayDate] = useState(() => new Date());
 
   function handlePrevDay() {
-    setTodayDate((date) => (date > 1 ? date - 1 : date));
+    setTodayDate((date) => {
+      const newDate = new Date(date);
+      newDate.setDate(newDate.getDate() - 1);
+      return newDate;
+    });
   }
 
   function handleNextDay() {
-    setTodayDate((date) => date + 1);
+    setTodayDate((date) => {
+      const newDate = new Date(date);
+      newDate.setDate(newDate.getDate() + 1);
+      return newDate;
+    });
   }
 
   const SortedServices = services
     .toSorted((a, b) => b.date.getTime() - a.date.getTime())
-    .filter((service) => service.date.getDate() === todayDate);
+    .filter((service) => service.date.getDate() === todayDate.getDate());
 
   const isClear = SortedServices.length === 0;
 
@@ -37,9 +45,9 @@ export default function DayServices({ services, setDoneServices }) {
           </Button>
           <TotalSummary services={SortedServices} todayDate={todayDate} />
           <Button
-            className={`button ${todayDate === new Date().getDate() ? "grayed" : ""}`}
+            className={`button ${todayDate.getDate() === new Date().getDate() ? "grayed" : ""}`}
             onclicked={() =>
-              todayDate < new Date().getDate() && handleNextDay()
+              todayDate.getDate() < new Date().getDate() && handleNextDay()
             }
           >
             Siguiente
@@ -101,7 +109,7 @@ function EmptyDoneServices() {
 function TotalSummary({ services, todayDate }) {
   const todayServices = services.filter(
     (item) =>
-      item.date.getDate() === todayDate ||
+      item.date.getDate() === todayDate.getDate() &&
       item.date.getMonth() === new Date().getMonth(),
   );
 
