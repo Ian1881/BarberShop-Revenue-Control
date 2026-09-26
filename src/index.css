@@ -358,7 +358,7 @@ button {
 
 .month-name {
   color: var(--ink);
-  font-size: clamp(1.2rem, 2.4vw, 1.7rem);
+  font-size: clamp(1rem, 2vw, 1.2rem);
   font-weight: 700;
   text-align: center;
 }
@@ -377,7 +377,7 @@ button {
 
 .month-total-value {
   color: var(--green);
-  font-size: clamp(3rem, 9vw, 5.5rem);
+  font-size: clamp(1.5rem, 5vw, 3.5rem);
   font-weight: 700;
   letter-spacing: -0.06em;
 }

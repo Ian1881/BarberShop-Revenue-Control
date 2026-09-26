@@ -31,7 +31,12 @@ export default function MonthSummary({ doneServices }) {
   );
 
   const monthTotal = filteredServices.reduce((acc, cur) => acc + cur.price, 0);
-
+  const currencyFormatterCor = new Intl.NumberFormat("es-NI", {
+    style: "currency",
+    currency: "NIO",
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 2,
+  });
   return (
     <div className="month-view">
       <div className="month-navigation">
@@ -57,7 +62,7 @@ export default function MonthSummary({ doneServices }) {
         <span
           translate="no"
           className="month-total-value"
-        >{`C$${monthTotal}`}</span>
+        >{`${currencyFormatterCor.format(monthTotal)}`}</span>
       </div>
     </div>
   );
