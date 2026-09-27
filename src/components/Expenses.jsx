@@ -25,13 +25,22 @@ const tempData = [
 
 export default function Expenses() {
   return (
-    <div className="month-view gastos-view">
-      <div className="gastos-copy">
-        <input type="text" placeholder="Añade gastos del mes" />
-        <input type="numeric" inputMode="decimal" placeholder="Costo" />
+    <div className="month-view gastos-view expenses-view">
+      <div className="expenses-form">
+        <input
+          className="expense-input expense-name-input"
+          type="text"
+          placeholder="Añade gastos del mes"
+        />
+        <input
+          className="expense-input expense-cost-input"
+          type="numeric"
+          inputMode="decimal"
+          placeholder="Costo"
+        />
         <Button> Añadir </Button>
       </div>
-      <div className="gastos-image-frame">
+      <div className="expenses-table-panel">
         <ExpensesList />
       </div>
     </div>
@@ -40,18 +49,19 @@ export default function Expenses() {
 
 function ExpensesList() {
   return (
-    <main>
-      <div>
+    <main className="expenses-content">
+      <div className="expenses-heading">
         <h2>Gastos</h2>
-        <span>Entradas</span>
+        {/* {change it to the actual month} */}
+        <span>del mes Sep</span>
       </div>
-      <div>
-        <table>
+      <div className="expenses-table-wrap">
+        <table className="expenses-table">
           <thead>
             <tr>
-              <th scope="col">Time</th>
-              <th scope="col">Worked</th>
-              <th scope="col">Task</th>
+              <th scope="col">Gasto</th>
+              <th scope="col">Costo</th>
+              <th scope="col">Fecha</th>
             </tr>
           </thead>
           <tbody>

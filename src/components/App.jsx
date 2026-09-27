@@ -26,7 +26,12 @@ function App() {
       service.date.getFullYear() === curYear.getFullYear(),
   );
 
-  const monthTotal = filteredServices.reduce((acc, cur) => acc + cur.price, 0);
+  const doneServicesTotal = filteredServices.reduce(
+    (acc, cur) => acc + cur.price,
+    0,
+  );
+
+  const monthTotal = doneServicesTotal;
 
   return (
     <div className="app-shell">
@@ -48,10 +53,10 @@ function App() {
           curYear={curYear}
         />
       )}
-      {activeView === "Gastos" && <Expenses />}
-      {activeView === "Inventario" && (
-        <Inventory expenses={expenses} setExpenses={setExpenses} />
+      {activeView === "Gastos" && (
+        <Expenses expenses={expenses} setExpenses={setExpenses} />
       )}
+      {activeView === "Inventario" && <Inventory />}
     </div>
   );
 }

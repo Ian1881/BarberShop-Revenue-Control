@@ -16,7 +16,7 @@ export default function NavBar({ setActiveView, activeView }) {
         >
           <img src={logo} alt="logo de barberia" className="navbar-logo" />
           <span>
-            Barberia <strong>ingresos</strong>
+            Control de <strong>ingresos</strong>
           </span>
         </a>
         <div className="nav-links" aria-label="Navegacion principal">
