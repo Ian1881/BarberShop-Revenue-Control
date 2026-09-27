@@ -41,7 +41,7 @@ export default function MonthSummary({
           Mes Anterior
         </Button>
         <div className="month-name">
-          Total Mes {months[curMonth.getMonth()]}/{curYear.getFullYear()}
+          Ganancia Mes {months[curMonth.getMonth()]}/{curYear.getFullYear()}
         </div>
         <Button
           className={

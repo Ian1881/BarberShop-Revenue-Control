@@ -31,7 +31,19 @@ function App() {
     0,
   );
 
-  const monthTotal = doneServicesTotal;
+  const parsedExpenses = expenses.map((exp) => {
+    return { ...exp, date: new Date(exp.date) };
+  });
+
+  const ExpensesTotal = parsedExpenses
+    .filter(
+      (exp) =>
+        exp.date.getMonth() === curMonth.getMonth() &&
+        exp.date.getFullYear() === curYear.getFullYear(),
+    )
+    .reduce((acc, cur) => acc + cur.cost, 0);
+
+  const monthTotal = doneServicesTotal - ExpensesTotal;
 
   return (
     <div className="app-shell">
@@ -54,7 +66,14 @@ function App() {
         />
       )}
       {activeView === "Gastos" && (
-        <Expenses expenses={expenses} setExpenses={setExpenses} />
+        <Expenses
+          ExpensesTotal={ExpensesTotal}
+          expenses={parsedExpenses}
+          setExpenses={setExpenses}
+          curMonth={curMonth}
+          setCurMonth={setCurMonth}
+          curYear={curYear}
+        />
       )}
       {activeView === "Inventario" && <Inventory />}
     </div>

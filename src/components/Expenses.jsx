@@ -1,32 +1,35 @@
 import { useState } from "react";
 import Button from "./Button.jsx";
+import { months } from "./helper.js";
 
-const tempData = [
-  { expense: "peine", cost: 130, id: 1, date: new Date().toLocaleDateString() },
-  {
-    expense: "alcohol",
-    cost: 50,
-    id: 2,
-    date: new Date().toLocaleDateString(),
-  },
-  {
-    expense: "cepillo",
-    cost: 80,
-    id: 3,
-    date: new Date().toLocaleDateString(),
-  },
-  {
-    expense: "cuchilla",
-    cost: 200,
-    id: 4,
-    date: new Date().toLocaleDateString(),
-  },
-  { expense: "gel", cost: 30, id: 5, date: new Date().toLocaleDateString() },
-];
-
-export default function Expenses({ setExpenses }) {
+export default function Expenses({
+  ExpensesTotal,
+  expenses,
+  setExpenses,
+  curMonth,
+  setCurMonth,
+  curYear,
+}) {
   const [description, setDescription] = useState("");
   const [cost, setCost] = useState("");
+
+  function handlePrevMonth() {
+    curMonth.getMonth() > 0 &&
+      setCurMonth((m) => {
+        const newMonth = new Date(m);
+        newMonth.setMonth(newMonth.getMonth() - 1);
+        return newMonth;
+      });
+  }
+
+  function handleNextMonth() {
+    curMonth.getMonth() < new Date().getMonth() &&
+      setCurMonth((m) => {
+        const newMonth = new Date(m);
+        newMonth.setMonth(newMonth.getMonth() + 1);
+        return newMonth;
+      });
+  }
 
   function addExpense() {
     const newExpense = {
@@ -40,6 +43,12 @@ export default function Expenses({ setExpenses }) {
     setDescription("");
     setCost("");
   }
+
+  const filteredExpenses = expenses.filter(
+    (exp) =>
+      exp.date.getMonth() === curMonth.getMonth() &&
+      exp.date.getFullYear() === curYear.getFullYear(),
+  );
 
   return (
     <div className="month-view gastos-view expenses-view">
@@ -62,20 +71,34 @@ export default function Expenses({ setExpenses }) {
         <Button onClicked={addExpense}>Añadir</Button>
       </div>
       <div className="expenses-table-panel">
-        <ExpensesList />
+        {filteredExpenses.length === 0 ? (
+          <NoExpenses>
+            <HeadBar
+              handlePrevMonth={handlePrevMonth}
+              handleNextMonth={handleNextMonth}
+              curMonth={curMonth}
+              ExpensesTotal={ExpensesTotal}
+            />
+          </NoExpenses>
+        ) : (
+          <ExpensesList expenses={filteredExpenses}>
+            <HeadBar
+              handlePrevMonth={handlePrevMonth}
+              handleNextMonth={handleNextMonth}
+              curMonth={curMonth}
+              ExpensesTotal={ExpensesTotal}
+            />
+          </ExpensesList>
+        )}
       </div>
     </div>
   );
 }
 
-function ExpensesList() {
+function ExpensesList({ children, expenses }) {
   return (
     <main className="expenses-content">
-      <div className="expenses-heading">
-        {/* {change it to the actual month} */}
-        <h2>Gastos de Sep</h2>
-        <span>total: total aqui</span>
-      </div>
+      {children}
       <div className="expenses-table-wrap">
         <table className="expenses-table">
           <thead>
@@ -86,7 +109,7 @@ function ExpensesList() {
             </tr>
           </thead>
           <tbody>
-            {tempData.map((expense) => (
+            {expenses.map((expense) => (
               <Expense expense={expense} key={expense.id} />
             ))}
           </tbody>
@@ -97,13 +120,49 @@ function ExpensesList() {
 }
 
 function Expense({ expense }) {
+  const date = expense.date.getDate();
+  const month = months[expense.date.getMonth()];
+  const year = expense.date.getFullYear();
+
   return (
     <tr>
       <td className="time-cell">{expense.expense}</td>
       <td>
         <span>{expense.cost}</span>
       </td>
-      <td>{expense.date}</td>
+      <td>{`${date}-${month}-${year}`}</td>
     </tr>
+  );
+}
+
+function NoExpenses({ children }) {
+  return (
+    <main className="expenses-content expenses-empty-content">
+      {children}
+      <div className="expenses-empty-state">
+        <h3>Sin gastos este mes</h3>
+      </div>
+    </main>
+  );
+}
+
+function HeadBar({
+  handlePrevMonth,
+  curMonth,
+  handleNextMonth,
+  ExpensesTotal,
+}) {
+  return (
+    <div className="expenses-heading">
+      <button className="expenses-month-button" onClick={handlePrevMonth}>
+        &larr;
+      </button>
+      {/* {change it to the actual month} */}
+      <h2>Gastos de {months[curMonth.getMonth()]}</h2>
+      <button className="expenses-month-button" onClick={handleNextMonth}>
+        &rarr;
+      </button>
+      <span className="expenses-total">Total: C${ExpensesTotal}</span>
+    </div>
   );
 }
