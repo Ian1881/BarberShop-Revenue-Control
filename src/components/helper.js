@@ -27,3 +27,10 @@ export const fullMonths = [
   "Noviembre",
   "Diciembre",
 ];
+
+export const currencyFormatterCor = new Intl.NumberFormat("es-NI", {
+  style: "currency",
+  currency: "NIO",
+  minimumFractionDigits: 0,
+  maximumFractionDigits: 2,
+});

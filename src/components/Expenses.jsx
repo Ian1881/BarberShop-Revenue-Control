@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Button from "./Button.jsx";
-import { months } from "./helper.js";
+import { months, currencyFormatterCor } from "./helper.js";
 
 export default function Expenses({
   ExpensesTotal,
@@ -32,6 +32,7 @@ export default function Expenses({
   }
 
   function addExpense() {
+    if (!description || !cost || cost <= 0) return;
     const newExpense = {
       expense: description,
       cost: cost,
@@ -42,6 +43,11 @@ export default function Expenses({
     setExpenses((expense) => [...expense, newExpense]);
     setDescription("");
     setCost("");
+  }
+
+  function removeExpense(id) {
+    if (confirm("Segure de remover este gasto?"))
+      setExpenses((exp) => exp.filter((x) => x.id !== id));
   }
 
   const filteredExpenses = expenses.filter(
@@ -81,7 +87,10 @@ export default function Expenses({
             />
           </NoExpenses>
         ) : (
-          <ExpensesList expenses={filteredExpenses}>
+          <ExpensesList
+            expenses={filteredExpenses}
+            onRemoveExpense={removeExpense}
+          >
             <HeadBar
               handlePrevMonth={handlePrevMonth}
               handleNextMonth={handleNextMonth}
@@ -95,7 +104,7 @@ export default function Expenses({
   );
 }
 
-function ExpensesList({ children, expenses }) {
+function ExpensesList({ children, expenses, onRemoveExpense }) {
   return (
     <main className="expenses-content">
       {children}
@@ -110,7 +119,11 @@ function ExpensesList({ children, expenses }) {
           </thead>
           <tbody>
             {expenses.map((expense) => (
-              <Expense expense={expense} key={expense.id} />
+              <Expense
+                expense={expense}
+                key={expense.id}
+                onRemoveExpense={onRemoveExpense}
+              />
             ))}
           </tbody>
         </table>
@@ -119,16 +132,24 @@ function ExpensesList({ children, expenses }) {
   );
 }
 
-function Expense({ expense }) {
+function Expense({ expense, onRemoveExpense }) {
   const date = expense.date.getDate();
   const month = months[expense.date.getMonth()];
   const year = expense.date.getFullYear();
 
   return (
     <tr>
-      <td className="time-cell">{expense.expense}</td>
+      <td className="time-cell">
+        <button
+          className="close-btn"
+          onClick={() => onRemoveExpense(expense.id)}
+        >
+          &times;
+        </button>
+        {expense.expense}
+      </td>
       <td>
-        <span>{expense.cost}</span>
+        <span>{currencyFormatterCor.format(expense.cost)}</span>
       </td>
       <td>{`${date}-${month}-${year}`}</td>
     </tr>

@@ -1,3 +1,7 @@
 export default function Inventory() {
-  return <h2>Here you will see your inventory</h2>;
+  return (
+    <div className="month-view">
+      <h2>Aqui cuando agregue la funcion de inventario</h2>
+    </div>
+  );
 }

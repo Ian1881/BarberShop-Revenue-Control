@@ -1,4 +1,4 @@
-import { months } from "./helper.js";
+import { months, currencyFormatterCor } from "./helper.js";
 import Button from "./Button.jsx";
 
 export default function MonthSummary({
@@ -25,12 +25,6 @@ export default function MonthSummary({
       });
   }
 
-  const currencyFormatterCor = new Intl.NumberFormat("es-NI", {
-    style: "currency",
-    currency: "NIO",
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 2,
-  });
   return (
     <div className="month-view">
       <div className="month-navigation">
