@@ -20,7 +20,7 @@ export default function NavBar({ setActiveView, activeView }) {
           </span>
         </a>
         <div className="nav-links" aria-label="Navegacion principal">
-          {["Inicio", "Mes", "Gastos"].map((view) => (
+          {["Inicio", "Mes", "Gastos", "Inventario"].map((view) => (
             <Button
               key={view}
               active={activeView === view}

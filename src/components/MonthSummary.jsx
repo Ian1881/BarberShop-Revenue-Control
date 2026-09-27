@@ -1,11 +1,12 @@
-import { useState } from "react";
 import { months } from "./helper.js";
 import Button from "./Button.jsx";
 
-export default function MonthSummary({ doneServices }) {
-  const [curMonth, setCurMonth] = useState(() => new Date());
-  const [curYear] = useState(() => new Date());
-
+export default function MonthSummary({
+  monthTotal,
+  curMonth,
+  setCurMonth,
+  curYear,
+}) {
   function handlePrevMonth() {
     curMonth.getMonth() > 0 &&
       setCurMonth((m) => {
@@ -24,13 +25,6 @@ export default function MonthSummary({ doneServices }) {
       });
   }
 
-  const filteredServices = doneServices.filter(
-    (service) =>
-      service.date.getMonth() === curMonth.getMonth() &&
-      service.date.getFullYear() === curYear.getFullYear(),
-  );
-
-  const monthTotal = filteredServices.reduce((acc, cur) => acc + cur.price, 0);
   const currencyFormatterCor = new Intl.NumberFormat("es-NI", {
     style: "currency",
     currency: "NIO",

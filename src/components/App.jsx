@@ -5,16 +5,28 @@ import "../index.css";
 import Services from "./Services.jsx";
 import DayServices from "./DayServices.jsx";
 import MonthSummary from "./MonthSummary.jsx";
-import Gastos from "./Gastos.jsx";
+import Expenses from "./Expenses.jsx";
+import Inventory from "./Inventory.jsx";
 
 function App() {
   const [services, setServices] = useLocalStorage("services", []);
   const [doneServices, setDoneServices] = useLocalStorage("doneServices", []);
   const [activeView, setActiveView] = useState("Inicio");
+  const [expenses, setExpenses] = useLocalStorage("expenses", []);
+  const [curMonth, setCurMonth] = useState(() => new Date());
+  const [curYear] = useState(() => new Date());
 
   const parsedDoneServices = doneServices.map((item) => {
     return { ...item, date: new Date(item.date) };
   });
+
+  const filteredServices = parsedDoneServices.filter(
+    (service) =>
+      service.date.getMonth() === curMonth.getMonth() &&
+      service.date.getFullYear() === curYear.getFullYear(),
+  );
+
+  const monthTotal = filteredServices.reduce((acc, cur) => acc + cur.price, 0);
 
   return (
     <div className="app-shell">
@@ -29,9 +41,17 @@ function App() {
         />
       )}
       {activeView === "Mes" && (
-        <MonthSummary doneServices={parsedDoneServices} />
+        <MonthSummary
+          monthTotal={monthTotal}
+          curMonth={curMonth}
+          setCurMonth={setCurMonth}
+          curYear={curYear}
+        />
       )}
-      {activeView === "Gastos" && <Gastos />}
+      {activeView === "Gastos" && <Expenses />}
+      {activeView === "Inventario" && (
+        <Inventory expenses={expenses} setExpenses={setExpenses} />
+      )}
     </div>
   );
 }
