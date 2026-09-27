@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Button from "./Button.jsx";
 
 const tempData = [
@@ -23,7 +24,23 @@ const tempData = [
   { expense: "gel", cost: 30, id: 5, date: new Date().toLocaleDateString() },
 ];
 
-export default function Expenses() {
+export default function Expenses({ setExpenses }) {
+  const [description, setDescription] = useState("");
+  const [cost, setCost] = useState("");
+
+  function addExpense() {
+    const newExpense = {
+      expense: description,
+      cost: cost,
+      id: crypto.randomUUID(),
+      date: new Date(),
+    };
+
+    setExpenses((expense) => [...expense, newExpense]);
+    setDescription("");
+    setCost("");
+  }
+
   return (
     <div className="month-view gastos-view expenses-view">
       <div className="expenses-form">
@@ -31,14 +48,18 @@ export default function Expenses() {
           className="expense-input expense-name-input"
           type="text"
           placeholder="Añade gastos del mes"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
         />
         <input
           className="expense-input expense-cost-input"
           type="numeric"
           inputMode="decimal"
           placeholder="Costo"
+          value={cost}
+          onChange={(e) => setCost(Number(e.target.value))}
         />
-        <Button> Añadir </Button>
+        <Button onClicked={addExpense}>Añadir</Button>
       </div>
       <div className="expenses-table-panel">
         <ExpensesList />
@@ -51,9 +72,9 @@ function ExpensesList() {
   return (
     <main className="expenses-content">
       <div className="expenses-heading">
-        <h2>Gastos</h2>
         {/* {change it to the actual month} */}
-        <span>del mes Sep</span>
+        <h2>Gastos de Sep</h2>
+        <span>total: total aqui</span>
       </div>
       <div className="expenses-table-wrap">
         <table className="expenses-table">
@@ -65,8 +86,8 @@ function ExpensesList() {
             </tr>
           </thead>
           <tbody>
-            {tempData.map((task) => (
-              <Expense task={task} key={task.id} />
+            {tempData.map((expense) => (
+              <Expense expense={expense} key={expense.id} />
             ))}
           </tbody>
         </table>
@@ -75,14 +96,14 @@ function ExpensesList() {
   );
 }
 
-function Expense({ task }) {
+function Expense({ expense }) {
   return (
     <tr>
-      <td className="time-cell">{task.expense}</td>
+      <td className="time-cell">{expense.expense}</td>
       <td>
-        <span>{task.cost}</span>
+        <span>{expense.cost}</span>
       </td>
-      <td>{task.date}</td>
+      <td>{expense.date}</td>
     </tr>
   );
 }
